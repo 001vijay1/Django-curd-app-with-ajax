@@ -1,1 +1,30 @@
 
+<form action="" method="post" id="add-form-data" enctype="multipart/form-data">
+  <fieldset class="border p-4" id="field-set">
+    <legend class="w-auto">Form</legend>
+    {% csrf_token %}
+    <div class="container">
+      <input type="text" name="name" placeholder="Name">
+      <input type="text" name="age" placeholder="Age">
+      <input type="file" name="file" placeholder="file">
+      <input type="number" name="score" placeholder="Score">
+      <input type="submit" class="btn btn-success" id="submitBtn" value="submit">
+    </div>
+  </fieldset>
+</form>
+
+$('#submitBtn').on('click',function(e) {
+    e.preventDefault();
+    var formData = new FormData($('#add-form-data')[0]);
+    //to see the form data
+    console.log(Array.from(formData));
+    let response =  fetch('/', {
+      method: 'POST',
+      body: formData
+    }).then(res => {
+      console.log(res);
+      if(res.status == 200){
+        alert("Data successfully added!")
+      }
+    })
+  })
